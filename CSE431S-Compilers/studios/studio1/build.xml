@@ -1,0 +1,102 @@
+<project name="studio1" default="run" basedir=".">
+
+	<!--
+	   $Id: build.xml 28 2010-05-26 14:27:24Z cytron $
+	-->
+
+
+	<property 
+       name="toolpath" 
+       value="../../jars/"
+   />
+	
+    <property 
+       name="jflex.jar" 
+       value="${toolpath}/JFlex.jar"/>
+	
+	<taskdef description="Translate a JFlex specification into Yylex.java" name="jflex" classname="JFlex.anttask.JFlexTask" classpath="${toolpath}/JFlex.jar" />
+	
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+	  <classpath>
+	    <pathelement location="${toolpath}/ant-contrib-1.0b3.jar"/>
+	  </classpath>
+	</taskdef>
+
+	<!-- Run the generated program -->
+
+	<target name="run" depends="compile,rebuild">
+		<java classname="studio1.autogen.Yylex" fork="true" failonerror="true" logError="true">
+
+			<arg value="../../TestFiles/studio1/input" />
+
+			<classpath>
+				<pathelement path="../../bin" />
+			</classpath>
+		</java>
+	</target>
+
+	<target name="clean">
+		<delete>
+			<fileset dir="." includes="**/*.class" />
+		</delete>
+		<delete dir="autogen" />
+		<antcall target="refresh" />
+	</target>
+
+
+
+	<!-- Our compiler tools generate Java source files.
+		Eclipse needs to refresh its workspace to see them,
+		and then we want them compiled along with our files. -->
+
+	<target name="rebuild">
+		<eclipse.convertPath fileSystemPath="${basedir}/../.." property="topLevelProject"/>
+		<propertyregex property="noslash"
+				override="true"
+		              input="${topLevelProject}"
+		              regexp="[/](.*)"
+		              select="\1"
+		              casesensitive="false" />
+		<echo message="Rebuilding ${noslash}"/>
+		<eclipse.refreshLocal resource="${noslash}" depth="infinite"/>
+		<eclipse.incrementalBuild project="${noslash}" kind="full"/>		
+		<eclipse.refreshLocal resource="${noslash}" depth="infinite"/>
+	</target>
+	
+	<!-- Run JFlex on our studio jflex file -->
+
+	<target name="genScanner" depends="genScanner.depend" unless="genScanner.uptodate">
+		<java jar="${jflex.jar}"
+			fork="true"
+			failonerror="true"
+			>
+			<arg value="-d"/>  <arg value="autogen"/>
+			<arg value="-nobak"/>
+			<arg value="studio1.jflex"/>
+	   </java>
+	</target>
+
+	<!-- Compile everything (Just Yylex really).  
+	     Yes, eclipse would do this for you
+	     on its own BUT it would do so at its leisure.  You cannot count
+	     on the .class files to be ready if we just go from generating the
+	     scanner to running it.
+	     -->
+
+	<target name="compile" depends="genScanner">
+		<antcall target="rebuild" />
+	</target>
+
+	<!-- 
+	     The scanner is up to date if the Yylex.java file is newer than studio1.jflex
+	     We could just let it generate a new scanner each time we want to run, BUT
+	        1) Running JFlex is slow - the slowest step in building our compiler
+	        2) I want to give you the chance to modify Yylex by hand if you want
+	     -->
+
+	<target name="genScanner.depend">
+		<uptodate property="genScanner.upToDate" targetfile="Yylex.java" srcfile="studio1.jflex" />
+	</target>
+
+
+</project>

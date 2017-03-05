@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="/socket.io/socket.io.js"></script>
+  <script type ="text/javascript">
+
+  var socketio = io.connect();
+  // var name = window.prompt("Enter your username: ", "");
+  var username = window.prompt("Enter your username: ", "");
+  socketio.emit("newuser", username);
+
+  socketio.on("message_to_client",function(username, data) {
+    //Append an HR thematic break and the escaped HTML of the new message
+    emoji(data);
+
+    document.getElementById("chatlog").appendChild(document.createElement("hr"));
+    var div = document.createElement("div");
+    var divd = document.createElement("p");
+
+    var d = new Date();
+    if (d.getHours() < 12) {
+      var date = " " + (d.getHours()) + ":" + d.getMinutes() +":" + d.getSeconds();
+    }
+    else {
+      var date = " " + (d.getHours()-12) + ":" + d.getMinutes() +":" + d.getSeconds();
+    }
+
+    div.innerHTML ="<p>" + username + ": " + data['message'] + "<i style='font-size:10px;float:right; '>" + date + "</i></p>";
+
+    document.getElementById("chatlog").appendChild(div);
+  });
+
+  //Replacing some keyboard signs with emojis
+  function emoji(data) {
+    //smiley face
+    if (data["message"].indexOf(":)") > -1) {
+      startIndex = data["message"].indexOf(":)");
+      var str = data["message"].replace(":)", "<img src='http://pix.iemoji.com/images/emoji/apple/ios-9/256/smiling-face-with-smiling-eyes.png' height='25px' width='25px' />");
+      data["message"] = str;
+    }
+    //sad face
+    if (data["message"].indexOf(":(") > -1) {
+      startIndex = data["message"].indexOf(":(");
+      var str = data["message"].replace(":(", "<img src='http://pix.iemoji.com/images/emoji/apple/ios-9/256/slightly-frowning-face.png' height='25px' width='25px' />");
+      data["message"] = str;
+    }
+    //happy face
+    if (data["message"].indexOf(":D") > -1) {
+      startIndex = data["message"].indexOf(":D");
+      var str = data["message"].replace(":D", "<img src='http://pix.iemoji.com/images/emoji/apple/ios-9/256/smiling-face-with-open-mouth-and-smiling-eyes.png' height='25px' width='25px' />");
+      data["message"] = str;
+    }
+    //crying face
+    if (data["message"].indexOf(":'(") > -1) {
+      startIndex = data["message"].indexOf(":'(");
+      var str = data["message"].replace(":'(", "<img src='http://pix.iemoji.com/images/emoji/apple/ios-9/256/loudly-crying-face.png' height='25px' width='25px' />");
+      data["message"] = str;
+    }
+    //angry face
+    if (data["message"].indexOf(">:-(") > -1) {
+      startIndex = data["message"].indexOf(">:-(");
+      var str = data["message"].replace(">:-(", "<img src='http://pix.iemoji.com/images/emoji/apple/ios-9/256/pouting-face.png' height='25px' width='25px' />");
+      data["message"] = str;
+    }
+    //tongue out face
+    if (data["message"].indexOf(":P") > -1) {
+      startIndex = data["message"].indexOf(">:-(");
+      var str = data["message"].replace(":P", "<img src='http://pix.iemoji.com/images/emoji/apple/ios-9/256/face-savouring-delicious-food.png' height='25px' width='25px' />");
+      data["message"] = str;
+    }
+    //heart
+    if (data["message"].indexOf("<3") > -1) {
+      startIndex = data["message"].indexOf("<3");
+      var str = data["message"].replace("<3", "<img src='http://pix.iemoji.com/images/emoji/apple/ios-9/256/heavy-black-heart.png' height='25px' width='25px' />");
+      data["message"] = str;
+    }
+  }
+
+  function sendMessage(){
+    var msg = document.getElementById("message_input").value;
+    var pm = document.getElementById("pm_receiver").value;
+    if (pm!='') {
+      socketio.emit("message_to_pm", {message:msg, pm: pm});
+      document.getElementById("message_to_pm").value = null;
+    }
+    else {
+    socketio.emit("message_to_server", {message:msg});
+    document.getElementById("message_input").value = null;
+  }
+  };
+
+  function changeRoom(room) {
+    var roomPass = document.getElementById(room).value;
+    console.log(roomPass);
+    socketio.emit("changeRoom", room, roomPass);
+  }
+
+  function kickUser(room) {
+    var kickThisUser = document.getElementById("user_to_kick").value;
+    socketio.emit("kickAUser", {kickusername: kickThisUser, chatroom: room});
+    document.getElementById("user_to_kick").value = "";
+  }
+
+  function banUser(room) {
+    var banThisUser = document.getElementById("user_to_ban").value;
+    socketio.emit("banAUser", {banusername: banThisUser, chatroom: room});
+    document.getElementById("user_to_ban").value = "";
+  }
+
+  function addRoom() {
+
+    var roomName = window.prompt("Enter your room name: ", "");
+    var password = window.prompt("Enter a password, if you want: ", "");
+
+    var p = document.createElement("p"); // create room name
+    var box = document.createElement("input");
+    box.type = "text";
+    box.setAttribute("id", roomName);
+    box.setAttribute("onkeydown","if (event.keyCode == 13) document.getElementById('send_button').click()");
+    var btn = document.createElement("button");
+    btn.setAttribute("onclick", "changeRoom(\'"+roomName+"\')");
+    btn.setAttribute("id", "btn"+roomName);
+    p.innerHTML=roomName;
+    btn.innerHTML="Enter Password";
+
+    document.getElementById("room-list").appendChild(p);
+    document.getElementById("room-list").appendChild(box);
+    document.getElementById("room-list").appendChild(btn);
+
+    socketio.emit("addRoom", roomName, password);
+  }
+
+  socketio.on("updateRoom",function(data) {
+    console.log(data);
+    document.getElementById("room-list").innerHTML = '';
+    for (i = 0; i < data.rooms.length; i++) {
+      var p = document.createElement("p"); // create room name
+      var box = document.createElement("input");
+      box.type = "text";
+      box.setAttribute("id", data.rooms[i]);
+      box.setAttribute("onkeydown","if (event.keyCode == 13) document.getElementById('send_button').click()");
+      var btn = document.createElement("button");
+
+      btn.setAttribute("onclick", "changeRoom(\'" + data.rooms[i] + "\')");
+      btn.setAttribute("id", "btn"+data.rooms[i]);
+      btn.innerHTML="Enter Password";
+      p.innerHTML=data.rooms[i];
+      document.getElementById("room-list").appendChild(p);
+      document.getElementById("room-list").appendChild(box);
+      document.getElementById("room-list").appendChild(btn);
+    }
+  });
+
+  socketio.on("showUsers", function(userinfo, room ) {
+    document.getElementById("user-list").innerHTML = '';
+    for (i=0; i < userinfo.length; i ++){ // interate through userinfo array (bypass defualt unused root user)
+      if ((userinfo[i].room == room) && (userinfo[i].username !== undefined)) { // if the room is the same if the current room
+        var p = document.createElement("p");
+        p.innerHTML ='<a href="#" onclick="kickUser(\''+userinfo[i].username+'\')">' + userinfo[i].username + '</a>';
+        document.getElementById("user-list").appendChild(p);
+      }
+    }
+  });
+
+  socketio.on("banned", function(data) {
+    alert("You are banned");
+  });
+
+  socketio.on("message_to_pm", function(username, data) {
+    emoji(data);
+    var sender = data.sender;
+    var message = data.message;
+    document.getElementById("chatlog").appendChild(document.createElement("hr"));
+    var div = document.createElement("div");
+    var divd = document.createElement("p");
+    var d = new Date();
+    if (d.getHours() < 12) {
+      var date = " " + (d.getHours()) + ":" + d.getMinutes() +":" + d.getSeconds();
+    }
+    else {
+      var date = " " + (d.getHours()-12) + ":" + d.getMinutes() +":" + d.getSeconds();
+    }
+    div.innerHTML ="<p>" + username + ": " + data['message'] + "<i style='font-size:10px;float:right; '>" + date + "</i></p>";
+    document.getElementById("chatlog").appendChild(div);
+
+  });
+
+  </script>
+</head>
+<body>
+  <div style="float:left;width:150px;height:300px;padding:10px;overflow:scroll-y;">
+    <b>ROOMS</b>
+    <div id="rooms"></div>
+    <div id="room-list">
+    </div>
+    <br>
+    <button onClick="addRoom()">Add Room</button>
+  </div>
+  <div style="float:left;width:450px;height:500px;overflow:scroll-y;padding:10px;border-left:1px solid black; border-right: 1px solid black">
+    <input type="text" id="message_input" onkeydown = "if (event.keyCode == 13) document.getElementById('send_button').click()"/>
+    <button onclick="sendMessage()" id="send_button">send</button>
+    <div id="chatlog"></div>
+  </div>
+  <div style="float:left;width:50px;height:300px;padding:10px;overflow:scroll-y;">
+    <b>USERS</b>
+    <div id="users"></div>
+    <div id="user-list">
+      <button onclick="privateMessage()" id="pm">PM</button>
+    </div>
+    <input type="text" id="user_to_kick"/>
+    <button onclick="kickUser()" id="kick_button">Kick!</button>
+    <br><br>
+    <input type="text" id="user_to_ban"/>
+    <button onclick="banUser()" id="user_to_ban">Ban!</button>
+    <br><br>
+    <input type="text" id="pm_receiver"/>
+  </body>
+  </html>

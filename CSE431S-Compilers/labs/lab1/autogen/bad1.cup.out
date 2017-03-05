@@ -1,0 +1,14 @@
+Token <Str> "S"
+Token <Str> "One"
+Token <Str> "Rest"
+Token <Str> "D"
+Token <Str> "plus"
+Token <Str> "zero"
+Token <Str> "bogus"
+Token <Str> "not"
+Token <Str> "really"
+Token <Str> "used"
+Start S
+Edge S Rest zero
+ABORT
+Error: Expected terminal: One

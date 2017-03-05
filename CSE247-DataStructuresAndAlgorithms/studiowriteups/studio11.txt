@@ -1,0 +1,60 @@
+Studio 11 write up
+
+Your TA's name:
+
+
+
+Students in your studio group:
+
+    Name        Student ID (begins with a 4)
+	
+1. Nikki Wines	437324
+2. Marie Warchol 437787
+3. Fiona Hon	434944
+4. Erin Ettenger 435647
+5.
+6.
+
+q1) 7,5,9,3,6,8,11,1,4,10,13,0,2,12,14
+
+q2) No need for written answer
+
+q3)  
+	1: BH = 0
+	2: BH = 0
+	3: BH = 0
+	4: BH = 1
+	5: BH = 1
+	6: BH = 2
+	7: BH = 2 
+	8: BH = 2 
+	9: BH = 2
+	10:BH = 3
+	11:BH = 3
+	12:BH = 3
+	13:BH = 3
+	14:BH = 4
+	15:BH = 4
+	
+q4) When one of the properties of a red/black tree is violated: i.e. whenever 2 red nodes are consecutive in the tree. . 
+
+q5) a) They are faster, but they have slower instertion and deletion because of their more rigid balance. 
+	b) They have the same big O = log(n) but the c= is ~1.44 for AVL and ~2 for for RBT
+	c) Because AVL trees rebalance more times and are more expensive
+
+q6) shirt, watch, undershorts, socks 
+
+q7) In book answers 
+
+q8) socks, undershorts, pants, shoes, watch, shirt, belt, tie, jacket
+
+q9) 
+
+q10) Post Oder of the tree: jacket, tie, belt, shirt, watch, shoes,	pants, undershorts, socks 
+	 Reverse of that is: socks, undershorts, pants, shoes, watch, shirt, belt, tie, jacket
+	 Therefore R-L Preoder is the same as Reverse Post Order. 
+
+
+
+
+

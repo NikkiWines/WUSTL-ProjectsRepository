@@ -1,0 +1,85 @@
+Studio 10 write up
+
+Your TA's name:
+
+
+
+Students in your studio group:
+
+    Name        Student ID (begins with a 4)
+	
+1. Nikki Wines	437324
+2. Marie Warchol 437787
+3. Fiona Hon	434944
+4. Erin Ettenger 435647
+5.
+6.
+
+
+
+Part A
+
+A1. Why do sad and happy appear as they do? Why is happy indented? What are the parent, left-child, and right-child relationships between happy and sad?
+	
+	Sad is the left child of the root, Happy is the right child of Sad. They are indented to show to show their l/r relationship
+
+Modify the code in the main method so that some string appears above sad, indented as much as happy.
+
+A2. What string did you use?
+
+		lonely.add("sad");
+		lonely.add("happy");
+		lonely.add("sleepy"); // "sl" is after "sa" alphabetically so gowes to top of tree
+
+In the numbers that follow, find the first and last entries in the tree that is shown (on its side, as discussed in lecture).
+
+A3. Is the first number always the first line to be shown in such a display?
+		No- the first (smallest) number will be the first line -- the most left of the tree
+A4. Is the last number always the last line to be shown?
+		N0- the last (largest) number will be the first line -- the most right of  the tree
+		
+A5. Why do we need addHelper?
+		It compares the nodes to their parents to determine which is larger.
+A6. Why is it private instead of public?
+		Because we want add helper to be only accessible by add
+A7. Does the code actually remove the node containing the value to be removed? If not, what is actually happening?
+		 No- it assigns null, or it picks the correct child to put where node used to be referenced
+
+A8. Why does the code fail to execute properly?
+		Because colors aren't comparable values - unless you were to assign colors a value or "percentage" of color
+		
+A9. Why does eclipse not report a problem when you try to create a BST of type Color?
+		You can instantiate the BST of type color, but the operations used on a BST are what cause the error.
+
+Part B
+
+
+SortedSetUsingBST (random input)
+
+B1. What behavior do you see in the output? You will likely have to rely on ticks rather than time, because the times are so fast.
+		No random set applicable from studio website-- i think there may haveb ene an error
+B2. What behavior did you expect to see, and why?
+
+
+SortedSetUsingBST (sorted input)
+
+B3. What behavior do you see in the output given the sorted input?
+		It looks relatively linear.
+B4. What behavior did you expect to see, and why?
+		We expected n because you are just inserting value that are already sorted- takes O(n) time. 
+		
+SortedSetUsingUnorderedList
+
+B5. What behavior do you see in the output when a sorted set is implemented by an unordered list? Adding to the list should be quick, so why are we seeing these times?
+		It looks like quadratic behavior
+B6. What behavior did you expect to see, and why?
+		We expected nlog(n) behavior because BST takes o(log(n)) for n values.
+
+
+
+
+
+
+
+
+

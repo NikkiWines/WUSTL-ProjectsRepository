@@ -1,0 +1,37 @@
+#calLayout {
+  border: 1px solid black;
+
+  background-color:#dbfff0;
+  width: 100%;
+  height: 20em;
+}
+
+.week {
+  height: 20%;
+}
+
+.day {
+  border: 1px solid black;
+  width: 12.5%;
+  text-align: center;
+}
+.column {
+  padding: 0px 10px 0px 10px;
+  height: 10em;
+  width: 100%;
+}
+.heading {
+  text-align: center;
+}
+#label{
+  text-align: center;
+  text-decoration: underline;
+  font-size: 25px;
+  font-style: bold;
+  padding: 0px 10px 0px 10px;
+}
+.btn btn-default {
+    padding-left: 10px;
+    list-style-type: none;
+    text-align: left;
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Weather Widget</title>
+  <link rel="stylesheet" type="text/css" href="weather.css"/>
+
+</head>
+<body>
+  <div id="main">
+    <div class="weather" id="weatherWidget">
+      <div class="weather-update" style="font-size: 10px; font-style: italic;" ></div>
+      <div class="weather-loc"></div>
+      <div class="weather-humidity"></div>
+      <div class="weather-temp"></div>
+      <img class="weather-tomorrow" />
+      <img class="weather-dayaftertomorrow" />
+      <br>
+      <button style="text-align: center;" id="reload"> Reload </button>
+
+    </div>
+  </div>
+  <script>
+
+  function fetchWeather() {
+    // w3 schools: http://www.w3schools.com/xml/ajax_intro.asp
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", "http://classes.engineering.wustl.edu/cse330/content/weather_json.php", true);
+    xmlHttp.addEventListener("load", ajaxCallback, false);
+    xmlHttp.send();
+  }
+
+  function ajaxCallback(event){
+    // w3 schools: http://www.w3schools.com/js/js_json_intro.asp
+    //             http://www.w3schools.com/jsref/event_target.asp
+    var obj = JSON.parse(event.target);
+;
+
+
+
+  }
+  document.addEventListener("DOMContentLoaded", fetchWeather, false);
+
+  document.getElementById("reload").addEventListener("click", reload, false);
+
+  function reload(event) {
+    fetchWeather();
+  }
+  </script>
+</body>
+</html>

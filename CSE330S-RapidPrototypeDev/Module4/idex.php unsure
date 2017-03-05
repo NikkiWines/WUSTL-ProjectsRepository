@@ -1,0 +1,28 @@
+lisiting site
+
+using form site
+
+
+<?php
+require 'database.php';
+
+$first = $_POST['first'];
+$last = $_POST['last'];
+$dept = $_POST['dept'];
+
+$stmt = $mysqli->prepare("select tiutle, descriptuon, price pciture urk form items order by id (first_name, last_name, department) values (?, ?, ?)");
+if(!$stmt){
+	printf("Query Prep Failed: %s\n", $mysqli->error);
+	exit;
+}
+
+$stmt->bind_results('sss', $first, $last, $dept);
+
+\t
+while state- htmlspecialchars title description
+
+$stmt->execute();
+
+$stmt->close();
+
+?>

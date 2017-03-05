@@ -1,0 +1,14 @@
+Token <Str> "letter"
+Token <Str> "digit"
+Token <Str> "blank"
+Token <Str> "String"
+Token <Str> "Id"
+Token <Str> "Num"
+Start String
+Edge String Id letter
+Edge String Num digit
+Edge Id Id letter
+Edge Id Id digit
+Edge Id $FINAL$ blank
+Edge Num Num digit
+Edge Num $FINAL$ blank

@@ -1,0 +1,113 @@
+<project name="lab2" default="tdn" basedir=".">
+
+	<!--
+	   $Id: build.xml 63 2010-05-27 15:34:13Z cytron $
+	-->
+
+	<property 
+       name="toolpath" 
+       value="../../jars/"
+    />
+	
+	<property name="cup.jar" value="${toolpath}/java-cup-11a.jar" />
+
+	<property name="jflex.jar" value="${toolpath}/JFlex.jar" />
+
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="${toolpath}/ant-contrib-1.0b3.jar" />
+		</classpath>
+	</taskdef>
+
+	<taskdef description="Translate a JFlex specification into Yylex.java" name="jflex" classname="JFlex.anttask.JFlexTask" classpath="${jflex.jar}" />
+
+	<taskdef description="Translate a CUP specification into a parser and symbol file" name="cup" classname="java_cup.anttask.CUPTask" classpath="${cup.jar}" />
+
+	<target name="build" depends="setup,genScanner,genParser,symUpdate1,symUpdate2">
+		<antcall target="refresh" />
+	</target>
+
+	<target name="clean">
+		<delete dir="autogen" />
+		<antcall target="refresh"/>
+	</target>
+
+	<target name="tdn" depends="build">
+		<antcall target="forEachTestFile">
+			<param name="method" value="tdn" />
+		</antcall>
+	</target>
+	
+	<target name="bup" depends="build">
+		<antcall target="forEachTestFile">
+			<param name="method" value="bup" />
+		</antcall>
+	</target>
+
+	<target name="refresh">
+		<eclipse.convertPath fileSystemPath="${basedir}/../.." property="topLevelProject"/>
+		<propertyregex property="noslash"
+				override="true"
+		              input="${topLevelProject}"
+		              regexp="[/](.*)"
+		              select="\1"
+		              casesensitive="false" />
+		<echo message="Rebuilding ${noslash}"/>
+		<eclipse.refreshLocal resource="${noslash}" depth="infinite"/>
+		<eclipse.incrementalBuild project="${noslash}" kind="full"/>		
+		<eclipse.refreshLocal resource="${noslash}" depth="infinite"/>
+	</target>
+
+	<target name="setup">
+		<mkdir dir="autogen" />
+	</target>
+
+	<target name="symUpdate1" depends="sym1.check" unless="sym1.valid">
+		<touch file="autogen/Yylex.java" />
+	</target>
+
+	<target name="sym1.check">
+		<uptodate property="sym1.valid" targetfile="autogen/Yylex.java" srcfile="autogen/sym.java" />
+	</target>
+
+	<target name="symUpdate2" depends="sym2.check" unless="sym2.valid">
+		<touch file="RecursiveDescent.java" />
+		<touch file="../../labsupport/lab2/tdn.java" />
+	</target>
+
+	<target name="sym2.check">
+		<uptodate property="sym2.valid" targetfile="RecursiveDescent.java" srcfile="autogen/sym.java" />
+	</target>
+
+
+	<target name="genParser">
+		<cup srcfile="${basedir}/addhaque.cup" destdir="${basedir}/.." parser="Parser" quiet="true" />
+	</target>
+
+	<target name="genScanner" depends="genParser">
+		<jflex file="scanner.jflex" destdir="${basedir}/.." nobak="true" />
+	</target>
+
+	<target name="runOneFile" depends="build">
+		<echo message="Parsing technique ${method} on testfile ${testfile}"/>
+		<fail message="Internal target" unless="method" />
+		<fail message="Internal target" unless="testfile" />
+		<java classname="lab2.${method}" logError="true" fork="true" failonerror="false">
+			<classpath>
+				<pathelement location="${cup.jar}" />
+				<pathelement path="../../bin" />
+			</classpath>
+			<arg value="${testfile}" />
+		</java>
+
+	</target>
+
+	<target name="forEachTestFile">
+		<foreach inheritall="true" delimiter="," trim="true" param="testfile" target="runOneFile">
+			<path>
+				<fileset dir="../../TestFiles/lab2" />
+			</path>
+		</foreach>
+	</target>
+
+</project>

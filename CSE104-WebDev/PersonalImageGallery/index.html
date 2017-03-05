@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Personal Image Gallery | Wednesday Feb 03 Lab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/jquery.modal.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+
+
+  </head>
+  <body>
+
+    <!-- Modals; Edit with care -->
+    <div id="img1" style="display:none;">
+      <h3>Lake</h3>
+      <p> A blue and orange sky is reflected off of a large lake. </p>
+      <img src="images/large/1.jpg">
+    </div>
+     <div id="img2" style="display:none;">
+      <h3>Snowy Road</h3>
+      <p> A snow lined winding road is framed by massive trees. </p>
+      <img src="images/large/2.jpg">
+    </div>
+     <div id="img3" style="display:none;">
+      <h3>Field</h3>
+      <p> A wheat field basks in the light of a sunset.</p>
+      <img src="images/large/3.jpg">
+    </div>
+     <div id="img4" style="display:none;">
+      <h3>Ocean</h3>
+      <p> A vast ocean reflects the twilight sky</p>
+      <img src="images/large/4.jpg">
+    </div>
+     <div id="img5" style="display:none;">
+      <h3>City</h3>
+      <p> A busy city that never sleeps.</p>
+      <img src="images/large/5.jpg">
+    </div>
+     <div id="img6" style="display:none;">
+      <h3>Aerial City</h3>
+      <p>An aerial shot shows off a city's beautiful architecture and landscape. </p>
+      <img src="images/large/6.jpg">
+    </div>
+     <div id="img7" style="display:none;">
+      <h3>Forest</h3>
+      <p> Emerald trees fill a park </p>
+      <img src="images/large/7.jpg">
+    </div>
+     <div id="img8" style="display:none;">
+      <h3>Mountain Top</h3>
+      <p> Mountains interrupt the line of the horizon.</p>
+      <img src="images/large/8.jpg">
+    </div>
+     <div id="img9" style="display:none;">
+      <h3>Mountains and Lake</h3>
+      <p> A glassy lake reflects the mountains that overlook it.</p>
+      <img src="images/large/9.jpg">
+    </div>
+     <div id="img10" style="display:none;">
+      <h3>Mountains and River</h3>
+      <p> A brilliant sunset overlooks a winding river. </p>
+      <img src="images/large/10.jpg">
+    </div>
+     <div id="img11" style="display:none;">
+      <h3>Path and Creek </h3>
+      <p> A wooden path stands over a fast moving creek.</p>
+      <img src="images/large/11.jpg">
+    </div>
+     <div id="img12" style="display:none;">
+      <h3>Reflected Mountains</h3>
+      <p> A cottage and several grassy mountains are reflected in the lake's crystal waters. </p>
+      <img src="images/large/12.jpg">
+    </div>
+     <div id="img13" style="display:none;">
+      <h3>Orange Forest</h3>
+      <p> Sunlight filters through a forest. </p>
+      <img src="images/large/13.jpg">
+    </div>
+     <div id="img14" style="display:none;">
+      <h3> Mountain and Forest </h3>
+      <p> A fisheye shot from the top of a mountain shows an expanded view of the scene below. </p>
+      <img src="images/large/14.jpg">
+    </div>
+     <div id="img15" style="display:none;">
+      <h3>Nightime Skyline</h3>
+      <p> A city skyline lights up the night. </p>
+      <img src="images/large/15.jpg">
+    </div>
+    
+    <!-- Page content -->
+    <div class="container">
+
+      <section class="page-header">
+        <h1 class="project-name">Personal Image Gallery.</h1>
+        <h2 class="project-tagline">A selection of great, high quality images</h2>
+      </section>
+
+      <section class="gallery">
+        <ol class="PersonalImageGallery">
+          <li><a href="#img1" rel="modal:open"><img src="images/thumbnails/1.jpg"></a></li>
+          <li><a href="#img2" rel="modal:open"><img src="images/thumbnails/2.jpg"></a></li>
+          <li><a href="#img3" rel="modal:open"><img src="images/thumbnails/3.jpg"></a></li>
+          <li><a href="#img4" rel="modal:open"><img src="images/thumbnails/4.jpg"></a></li>
+          <li><a href="#img5" rel="modal:open"><img src="images/thumbnails/5.jpg"></a></li>
+          <li><a href="#img6" rel="modal:open"><img src="images/thumbnails/6.jpg"></a></li>
+          <li><a href="#img7" rel="modal:open"><img src="images/thumbnails/7.jpg"></a></li>
+          <li><a href="#img8" rel="modal:open"><img src="images/thumbnails/8.jpg"></a></li>
+          <li><a href="#img9" rel="modal:open"><img src="images/thumbnails/9.jpg"></a></li>
+          <li><a href="#img10" rel="modal:open"><img src="images/thumbnails/10.jpg"></a></li>
+          <li><a href="#img11" rel="modal:open"><img src="images/thumbnails/11.jpg"></a></li>
+          <li><a href="#img12" rel="modal:open"><img src="images/thumbnails/12.jpg"></a></li>
+          <li><a href="#img13" rel="modal:open"><img src="images/thumbnails/13.jpg"></a></li>
+          <li><a href="#img14" rel="modal:open"><img src="images/thumbnails/14.jpg"></a></li>
+          <li><a href="#img15" rel="modal:open"><img src="images/thumbnails/15.jpg"></a></li>
+        </ol>
+      </section>
+      
+      <h3> <a href="#top">Return to Top</a></h3>
+
+      <footer class="site-footer">
+        <hr>
+        <h2>Photos provided by user ThomasGasson via <a href="http://imgur.com/gallery/akHsJ" target="_blank">imgur.com</a></h2>
+        <h3> Questions? <a href="mailto:nikki.wines@wustl.edu"> Email me</a> or call me at 914 334 1694</p> </h3>
+      </footer>
+      <!-- JavaScript; Do not edit below -->
+       <script src="js/jquery-1.12.0.min.js"></script>
+        <script src="js/jquery.modal.min.js"></script>
+    </div>
+  </body>
+</html>

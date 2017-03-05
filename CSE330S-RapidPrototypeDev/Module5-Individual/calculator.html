@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+  <title> Calculator </title>
+</head>
+<body>
+  <form id="form" >
+    <p>
+      Enter First Number: <input type="number" step="0.001" id="value1" required/>
+      Enter Second Number: <input type="number" step= "0.001" id="value2" required/>
+    </p>
+    <p>
+      <input type="button"  value="Add" id="add">
+      <input type="button"  value="Subtract" id="subtract">
+      <input type="button"  value="Multiply" id="multiply">
+      <input type="button"  value="Divide" id="divide">
+    </p>
+  </form>
+  <script type="text/javascript">
+  document.getElementById("add").addEventListener("click", function(event){
+    var value1 = document.getElementById('value1').value;
+    var value2 = document.getElementById('value2').value;
+    var ans= parseFloat(value1) + parseFloat(value2);
+    var ans= parseFloat(ans).toFixed(3);
+    window.alert("Addition of "+ value1 + " and " + value2 + " = " + ans);
+  }, false);
+
+  document.getElementById("subtract").addEventListener("click", function(event){
+    var value1 = document.getElementById('value1').value;
+    var value2 = document.getElementById('value2').value;
+    var ans= parseFloat(value1) - parseFloat(value2);
+    var ans= parseFloat(ans).toFixed(3);
+    window.alert("Subtraction of "+ value1 + " and " + value2 + " = " + ans);
+  }, false);
+
+  document.getElementById("multiply").addEventListener("click", function(event){
+    var value1 = document.getElementById('value1').value;
+    var value2 = document.getElementById('value2').value;
+    var ans= parseFloat(value1) * parseFloat(value2);
+    var ans= parseFloat(ans).toFixed(3);
+    window.alert("Multiplication of "+ value1 + " and " + value2 + " = " + ans);
+  }, false);
+
+  document.getElementById("divide").addEventListener("click", function(event){
+    var value1 = document.getElementById('value1').value;
+    var value2 = document.getElementById('value2').value;
+    var ans= parseFloat(value1) / parseFloat(value2);
+    var ans= parseFloat(ans).toFixed(3);
+    window.alert("Division of "+ value1 + " and " + value2 + " = " + ans);
+  }, false);
+
+  // testing commit //
+ </script>
+
+
+</body>
+</html>

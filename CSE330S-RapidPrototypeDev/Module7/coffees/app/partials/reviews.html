@@ -1,0 +1,57 @@
+
+<div class="container-fluid">
+<br>
+<ul class="nav nav-tabs">
+  <li role=presentation><div style="padding-right: 10px"><img src="http://emojipedia-us.s3.amazonaws.com/cache/f2/7b/f27b7d0e8c46f5326b81b184a2c2f383.png" height='50'></div></li>
+  <li role="presentation"><a href="#/coffees">Coffees</a></li>
+  <li role="presentation" class="active"><a href="#/coffees/{{coffees.id}}">Reviews</a></li>
+  <li role="presentation">
+    <form class="navbar-form navbar-left" role="search">
+      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+      <div class="form-group" >
+        <input type="text" class="form-control" ng-model="query" placeholder="Search">
+      </div>
+    </form>
+  </li>
+  <li role="presentation">
+    <form class="navbar-form navbar-left" role="sort">
+      <label for="sort">Sort By:</label>
+      <select class="form-control" ng-model="orderProp" id="sort">
+        <option value="reviewer">Name</option>
+        <option value="comment">Comment</option>
+        <option value="rating">Rating</option>
+      </select>
+  </form>
+  </li>
+
+</ul>
+
+<h3>{{coffees.brand}} Review: </h3>
+
+<ul class="pager">
+  <li class="previous"><a href="#/coffees/{{(coffees.id -1)%4}}">Previous</a></li>
+  <li class="next"><a href="#/coffees/{{(coffees.id +1)%4}}">Next</a></li>
+</ul>
+
+<table class="table table-hover" >
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Comment</th>
+        <th>Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="review in coffees.reviews | filter:query | orderBy:orderProp">
+        <td>{{review.reviewer}}</td>
+        <td>{{review.comment}}</td>
+        <td>{{review.rating}}</td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+  <div style="text-align: center"><img src="{{coffees.imgURL}}" height="400"></div>
+
+</div>

@@ -1,0 +1,156 @@
+<project name="lab1" default="run" basedir=".">
+   
+ 
+	<!--
+	   $Id: build.xml 25 2010-05-23 16:31:06Z cytron $
+	-->
+
+	
+	<property 
+       name="toolpath" 
+       value="../../jars/"
+   />
+
+   <path id="src.path">
+     <pathelement location="../../labs" />
+     <pathelement location="../../studios" />
+     <pathelement location="../../lecture" />
+     <pathelement location="../../labsupport" />
+     <pathelement location="../../coursesupport" />
+   </path>
+
+
+   <path id="classes.path">
+     <fileset dir="../../jars">
+       <include name="JFlex.jar"/>
+     </fileset>
+   </path>
+	
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+	  <classpath>
+	    <pathelement location="${toolpath}/ant-contrib-1.0b3.jar"/>
+	  </classpath>
+	</taskdef>
+	
+	<target name="run" depends="setup,genScanner,rebuild">
+		<antcall target="runAll">
+			<param name="target" value="processcup"/>
+		</antcall>
+	</target>
+
+	<target name="runAndGenTables" depends="run">
+		<antcall target="runAll">
+			<param name="target" value="gentable"/>
+		</antcall>
+	</target>
+
+	<target name="clean">
+	  <delete dir="autogen"/>
+	  <antcall target="rebuild"/>
+	</target>
+	
+	<target name="runAll" depends="setup,genScanner,rebuild">
+	    <!--fail message="Need to have target set" unless="target"/-->
+		<antcall target="runTargetCup">
+			<param name="cupfile" value="good1"/>
+		</antcall>
+		<antcall target="runTargetCup">
+			<param name="cupfile" value="good2"/>
+		</antcall>
+		<antcall target="runTargetCup">
+			<param name="cupfile" value="good3"/>
+		</antcall>
+		<antcall target="runTargetCup">
+			<param name="cupfile" value="good4"/>
+		</antcall>
+		<antcall target="runTargetCup">
+			<param name="cupfile" value="bad1"/>
+		</antcall>
+	</target>
+
+	
+	<target name="runTargetCup">
+      <fail message="Internal target, cannot be called from outside" unless="target"/>
+      <fail message="Internal target, cannot be called from outside" unless="cupfile"/>
+	  <echo message="Running target: ${target}"/>
+	  <antcall target="${target}">
+	     <param name="cupfile" value="${cupfile}"/>
+	  </antcall>
+	  <antcall target="rebuild"/>
+	</target>
+	
+
+	<target name="processcup">
+		<fail message="Internal target, cannot be called from outside" unless="cupfile"/>
+		<echo level="info" message="Processing ${cupfile}"/>
+		<java classname="lab1.RLgram"  fork="true" failonerror="false" output="autogen/${cupfile}.cup.out">
+			<classpath>
+				<pathelement path="../../bin"/>
+			</classpath>
+			<arg value="../../TestFiles/lab1/${cupfile}.cup"/>
+		</java>
+        <antcall target="rebuild"/>
+	</target>
+		
+	<target name="gentable">
+	   <fail message="Internal target, cannnot be called from outside" unless="cupfile"/>
+	   <java jar="jars/maketable.jar" input="autogen/${cupfile}.cup.out" output="autogen/${cupfile}.table" fork="true" failonerror="false"/>
+    </target>
+	
+	<target name="setup">
+		<mkdir dir="autogen"/>
+	</target>
+	
+	<target name="rebuild">
+		<antcall target="rebuildeclipse"/>
+		<antcall target="rebuildnoeclipse"/>
+	</target>
+		
+	<target name="rebuildnoeclipse" if="noeclipse">
+		<mkdir dir="../../bin"/>
+      		<javac includeantruntime="false" destdir="../../bin" nowarn="true" failonerror="false" debug="true"  encoding="iso-8859-1">
+         		<classpath refid="classes.path"/>
+         		<src refid="src.path"/>
+         		<include name="lab1/**/*.java"/>
+      		</javac>
+	</target>
+	
+	<target name="rebuildeclipse" unless="noeclipse">
+		<eclipse.convertPath fileSystemPath="${basedir}/../.." property="topLevelProject"/>
+		<propertyregex property="noslash"
+				override="true"
+		              input="${topLevelProject}"
+		              regexp="[/](.*)"
+		              select="\1"
+		              casesensitive="false" />
+		<echo message="Rebuilding ${noslash}"/>
+		<eclipse.refreshLocal resource="${noslash}" depth="infinite"/>
+		<eclipse.incrementalBuild project="${noslash}" kind="full"/>		
+		<eclipse.refreshLocal resource="${noslash}" depth="infinite"/>
+	</target>
+		
+    <property 
+       name="jflex.jar" 
+       value="${toolpath}/JFlex.jar"/>
+	
+	
+<target name="genScanner.depend">
+	<condition property="genScanner.uptodate">
+		<uptodate srcfile="scanner.jflex" targetfile="autogen/Scanner.java"/>
+	</condition>
+
+</target>
+
+<target name="genScanner" depends="genScanner.depend" unless="genScanner.uptodate">
+	<java jar="${jflex.jar}"
+		fork="true"
+		failonerror="true"
+		>
+		<arg value="-d"/>  <arg value="autogen"/>
+		<arg value="-nobak"/>
+		<arg value="scanner.jflex"/>
+   </java>
+</target>
+	
+
+</project>

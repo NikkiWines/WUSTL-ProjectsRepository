@@ -1,0 +1,50 @@
+Studio 4 write up
+
+Your TA's name:
+
+
+
+Students in your studio group:
+
+    Name        Student ID (begins with a 4)
+	
+1. Fiona Hon		434944
+2. Erin Ettenger 	435647
+3. 
+4.
+5.
+6.
+
+Substitution
+
+
+Using substitution, prove that the solution to T(n)=T(n-1)+10 is T(n)=10n
+
+T(n) 	= 10n
+T(n-1) 	= 10(n-1)
+T(n) 	= 10(n-1)+10
+		= 10n-10+10
+		= 10n
+
+Using substitution, show that T(n)=T(n-1)+10 is O(n-squared)
+
+T(n^2)	= 10(n^2-1)+10
+		= 10n^2-10+10
+		= 10n^2
+		k = 11, some constant
+10n^2	<= O(k*n^2)
+
+Recursion Tree Solutions
+
+1.	T(n)=T(n-1)+2n-1, T(0)=10
+	T(n)=n^(2)+10
+
+
+2.	T(n)=T(n-1)+4n-5, T(0)=5
+	T(n)=2(n^2)-3n+5
+
+3.	T(n)=T(n/5)+7
+	(int)7*(log(n,5)+1)+21
+
+4.	T(n) = 4T(n/2) + 2n, T(0)=0
+	

@@ -1,0 +1,61 @@
+function [] = myTrajectory()
+% Wrapper function for mechanical engineering final project.
+addpath(genpath('.'));
+finished = 0;
+x = [];
+y = [];
+t = -1;
+hasData = 0;
+
+% UI loop
+while ~finished
+    disp('Press the number of the corresponding command to execute it.');
+    disp('1. Input data');
+    if (numel(x) ~= 0)
+        disp('2. Show max height');
+        disp('3. Show max distance');
+        disp('4. Show time to ground');
+        disp('5. Show trajectory graph');
+        hasData = 1;
+    end
+    disp('6. Exit');
+    
+    in = input('Input here: ');
+    
+    if hasData
+        while (in < 0 || in > 6)
+            in = input('Input here: ');
+        end
+    else
+        while (in ~= 1 && in ~= 6)
+            in = input('Input here: ');
+        end
+    end
+    
+    % got a viable input
+    
+    if (in == 1) % call trajectoryCalc
+        [x y t] = trajectoryCalc();
+    elseif (in == 6) % quit loop
+        disp('Goodbye!');
+        return;
+    end
+    
+    % if data is present
+    if (in == 2) % display max height
+        maxH = max(y);
+        disp(maxH);
+    elseif (in == 3) % display max distance (R)
+        maxD = max(x);
+        disp(maxD);
+    elseif (in == 4) % display time from launch to ground
+        disp(t);
+    elseif (in == 5) % plot trajectory
+        close all;
+        trajectoryPlot(x, y, t);
+    end
+        
+    
+end
+
+

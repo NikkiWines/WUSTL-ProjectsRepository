@@ -1,0 +1,60 @@
+Studio 2 write up
+
+Your TA's name:
+
+
+
+Students in your studio group:
+
+    Name        Student ID (begins with a 4)
+	
+1. Nikki Wines 437324
+2. Marie Warchol 437787
+3.
+4.
+5.
+6.
+
+Below each question, type in your short, to-the-point answers.
+
+Part A
+
+What do you see in the plots for ticks and time?
+
+They appear to grow quadratically though the time curve is less smooth than the ticks curve. 
+
+How would you characterize those curves?
+
+As quadratic curves
+
+Based on the current code for addLast, why do you see this behavior?
+
+Because there is a single for loop in AddLastBase and then an additional for loop in AddLastNoTail. AddLastNoTail calls AddLast base- making the entire equation hold a nested for loop, which produces quadratic equations. 
+Part B
+
+What behavior do you see now for appending n items to a list if you use a tail reference?
+
+The time is constant
+
+While we have reasoned so far only about time, if we are adding n elements to the end of a list, what is the asymptotic complexity of the additional space required when using the tail reference?
+
+Theta(1)
+
+Under what conditions would you recommend using a linked list with a tail reference vs. a linked list without at tail reference?
+
+Using a linked list with the tail will cause the program to run faster. 
+
+Part C
+
+Why does getSize() take the time it does?
+
+Because ticker.tick is within the for loop- making it a linear output.
+
+How did you achieve Θ(1) performance for getSize()?
+
+Counted the values as they were added, rather than counting the list- created new variable count to measure it. 
+
+
+Move ticker.tick() from within the for loop in getSize() and put it at the end 
+
+

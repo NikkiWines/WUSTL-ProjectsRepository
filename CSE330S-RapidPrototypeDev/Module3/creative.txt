@@ -1,0 +1,18 @@
+Fiona Hon       434944
+Nikki Wines     437324
+
+Link to homepage:
+
+http://ec2-54-205-130-75.compute-1.amazonaws.com/~nikkiwines/unregisteredHomepage.php
+
+This takes you to the unregistered user homepage - click log in and log in with 
+
+username: root 
+password: Retr*mingent75
+
+Creative portion description:
+
+We added a “Delete User” portion to our login page where user’s can delete logins. It tests against username and password. It will not delete a user that doesn’t already exist in the database.
+
+We also implemented a ‘Likes’ button, which increments every time someone presses the like button for a story- it is added as a separate field in the stories table. 
+

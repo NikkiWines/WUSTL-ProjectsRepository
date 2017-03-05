@@ -1,0 +1,28 @@
+function [] = trajectoryPlot(x, y, t)
+% This function plots the path of a projectile given its x coords, y
+% coords, and the time it took to hit the ground.
+% INPUTS:
+% x - x values of projectile in vector
+% y - y values of projectile in vector
+% t - time for projectile to hit the ground
+
+% set up graph and axes
+h = animatedline;
+tv = linspace(0, t, 100);
+xLim = max(x) + 0.1 * max(x);
+yLim = max(y) + 0.1 * max(y);
+axis([0 xLim 0 yLim]);
+xlabel('Distance (m)');
+ylabel('Height (m)');
+
+ for k = 1:length(tv)
+     titleString = sprintf('Distance vs. Height of Projectile at t = %0.5f s', tv(k)); 
+     title(titleString);
+     addpoints(h, x(k), y(k));
+     drawnow
+ end
+
+
+   
+
+

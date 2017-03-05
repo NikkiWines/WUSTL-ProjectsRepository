@@ -1,0 +1,60 @@
+Nikki Wines 437324 - CSE431 Lab 1 Readme
+
+Started case statements with the simplest section of the FSA
+where the pattern "start with str" is matched. 
+
+-Action 2 occurs when state 7 is reached with a str, after start and with have already 
+matched. 
+
+Moved onto the non-terminal terminal declarations.
+
+-Actions 3 and 4 help keep track of terminal and non terminal declarations through 
+the boolean isTerminal. Action 3 sets isTerminal to false if state 1 is reached. 
+-Action 4, resets isTerminal to true upon finding a semicolon at state 4. 
+-Action 5 registers the strings found at state 3 and 5 (declaration strings) 
+into the symbol table as terminal or non terminal.
+
+Moved on to production. 
+
+-Action 6 checks the left hand side str found at state 0 to ensure it is nonterminal.
+-Action 7: sets the right hand side variable term to the str when state 10 is 
+reached with a str.
+-Action 8: sets the right hand side variable nonterm to the str found when state 
+11 is reached with a str.
+-Action 9: Runs if an or-bar is found at state 11 or state 12. Checks that the 
+term and nonterm strings found in action 7 and 8 are as expected. Resets 
+the term and nonterm variables for the next production. 
+-Action 10: Runs if a semicolon is found at state 11 or state 12. Checks that the 
+term and nonterm strings found in action 7 and 8 are as expected. 
+Resets the lhs, term, and nonterm variables.
+
+Key Term Handling: 
+
+-Action 11: Runs if a non str type is found in the declarations at state 3 or state 5. good4.cup begins with declarations of 
+"non", "terminal", "start", and "with", which are all distinct, pre-set token types. Action 11 is run when non-str declarations
+are made. 
+
+In this sense, good4.cup is, in fact, bad, as the declaration of "non terminal obj non, with" is false not only because
+"non" and "with" as strings would not be nonterminal, but additionally because they are preset non-str token types. Because of 
+this good4.cup errors when state 3 is reached with a non-str type. 
+
+FSA: 
+0 -> 1: non
+0 -> 2: terminal 
+0 -> 6: start 
+0 -> 9: str 
+1 -> 2: terminal 
+2 -> 3: str
+3 -> 4: str
+4 -> 5: comma
+4 -> 0; semi 
+5 -> 4: str 
+6 -> 7: with 
+7 -> 8: str 
+8 -> 0: semi 
+9 -> 10: define 
+10 -> 11: str 
+11 -> 10: or
+11 -> 12: str 
+12 -> 0: semi 
+12 -> 10: or 

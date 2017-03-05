@@ -1,0 +1,48 @@
+Studio 1 write up
+
+Your TA's name:
+
+
+
+Students in your studio group:
+
+    Name        Student ID (begins with a 4)
+	
+1. Nikki Wines	437324
+2. Marie Warchol 
+3.
+4.
+5.
+6.
+
+Below each question, type in your short, to-the-point answers.
+
+Part A
+
+What are the exact, closed-form formulas for the ticker counts in:
+
+	ProbA?   n   (I'm giving you this answer, make sure it agrees with what you saw)
+
+	ProbB?  (n*(n-1))/2
+
+	ProbC?  (n*(n+1))/2  
+
+	ProbD?  (n*(n+1)*(2n+1))/6
+
+	ProbE?  (n^2 
+
+
+Part B
+
+1.  c = 1       n0 = 1
+2.  c = 1       n0 = 1000
+3.  c = 1       n0 = 1
+
+Part C
+
+1. 
+
+2.
+
+Part D
+

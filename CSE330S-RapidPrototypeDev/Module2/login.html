@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>File Sharing Site: Login Page</title>
+</head>
+<body>
+ <h1> File Sharing: Login Page </h1>
+    <fieldset>
+      <legend>Login Please: </legend>
+        <form method="post" action="userlogin.php">
+        <br>
+        <label>Username </label>
+        <br>
+        <input type="text" name="username" required/>
+        <br>
+        <br>
+        <input type="submit" name="submit" value="Login"/>
+      </form>
+  </fieldset>
+
+  <fieldset>
+    <legend>Add/Delete User: </legend>
+      <form method="post" action="useredits.php">
+      <br>
+      <label>Username </label>
+      <br>
+      <input type="text" name="username" required/>
+      <br>
+      <br>
+      <input type="radio" name="user" value="Add" required/> <label>Add</label>
+      <input type="radio" name="user" value="Delete"/><label>Delete</label><br><br>
+      <input type="submit" name="submit" value="Submit"/>
+    </form>
+</fieldset>
+</body>
+</html>

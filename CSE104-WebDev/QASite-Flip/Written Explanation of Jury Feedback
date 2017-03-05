@@ -1,0 +1,11 @@
+** Written Explanation of Jury Feedback Implementation ** 
+
+Jurors 256, 175, 172, 145, and the 104 grader all had similar issues with the pages. They all touched upon how the two-menu function was a little confusing. Juror 256 discussed streamlining the menu bars and the confusion with the toggle button. Juror 175 recommended taking away the toggle button or having the sidebar fixed. Juror 172 noted that part of the "international students" link was partially cut off. Juror 145 mentioned condensing the menu-bars into one menu. The 104 grader talked about how the sidebar was causing scrolling issue and how it caused the content to become too large for the page at smaller sizes. Taking into account the multitude of problems people had with the sidebar/toggle button, I will condense it into the main menu bar that is just below the Jumbotron. Taking out the sidebar/toggle button will remove the horizontal scroll bar, making scrolling easy with the layout. The content should no longer overflow, but stay within view surrounded by a small border on all screen sizes. I will streamline the "Facebook, Twitter, Instagram" sections from the previous menu by implementing a drop down "Follow Us" menu to hold all three links. I may decide to change the order of the links in the main menu bar, partitioning it into 3 sections to hold the information page links, the search bar, and the contact us/follow us links.
+
+Juror 172 noted that the search bar doesn't work. As I have not learnt how to implement angular.js yet, the search bar won’t work. However, in the event that I did learn how to use it, I think that the search bar would be a good addition to the site, so that people could look up the specific sections within each page. This is why I will leave the search bar.
+
+Juror 145 mentioned that more graphics could be added and that the main headings were somewhat bland. To fix this I will add gradients to the information pages to make them unique. I might leave the Home page Jumbotron as it was because I liked starting with the dark green WashU base color. I might add a glyphicon to the Contact Us button, and I will also search for more that would suit the remaining sub-headings like "Education", "Sports", etc. 
+
+This covers all the remarked upon issues.
+
+
