@@ -9,8 +9,7 @@
 import Foundation
 struct Movie {
     var name: String
-    //var image: UIImage // needed here or in a separate array
-    var description: String
-    //var favorited: Boolean = false;
-    var url: String // needed or unecessary
+    var url: String
+    var imdb: String
+    var year: String
 }

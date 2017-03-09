@@ -27,31 +27,81 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KEP-L1-bcf">
-                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="108" width="375" height="471"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WRg-GQ-c6V">
-                                    <size key="itemSize" width="85" height="100"/>
+                                    <size key="itemSize" width="85" height="115"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="mycell" id="cTs-IW-NGc">
-                                        <rect key="frame" x="0.0" y="0.0" width="85" height="100"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="85" height="115"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="85" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="85" height="115"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </view>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="dRQ-LC-b2U">
+                                <rect key="frame" x="320" y="76" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rm5-Rp-dJN">
+                                <rect key="frame" x="0.0" y="161" width="375" height="163"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.14389884978695444" blue="0.14976618443659528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hbq-Zy-Cax">
+                                <rect key="frame" x="162" y="290" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SqM-PD-0Pg">
+                                <rect key="frame" x="111" y="580" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="A-Z"/>
+                                <connections>
+                                    <action selector="AZSelected:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Afq-UU-STR"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sort By: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ab1-at-u7K">
+                                <rect key="frame" x="7" y="585" width="66" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cp3-jG-Og6">
+                                <rect key="frame" x="201" y="580" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Z-A"/>
+                                <connections>
+                                    <action selector="ZASelected:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UF5-lO-UlV"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yBB-7H-RcJ">
+                                <rect key="frame" x="283" y="580" width="92" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Released"/>
+                                <connections>
+                                    <action selector="releasedSelected:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vG3-sz-6jp"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="F4O-9x-i9k"/>
                     <connections>
+                        <outlet property="AZbutton" destination="SqM-PD-0Pg" id="mPf-mp-u83"/>
+                        <outlet property="activityIndicator" destination="dRQ-LC-b2U" id="iXC-su-3g4"/>
+                        <outlet property="errorIcon" destination="hbq-Zy-Cax" id="j5P-ng-89D"/>
+                        <outlet property="errorLabel" destination="Rm5-Rp-dJN" id="2pw-uN-Xno"/>
                         <outlet property="searchBar" destination="O17-2V-Jy3" id="YoW-2v-HGk"/>
                         <outlet property="theCollectionView" destination="KEP-L1-bcf" id="XG4-Lk-7Z4"/>
                     </connections>
@@ -60,13 +110,13 @@
             </objects>
             <point key="canvasLocation" x="2015.2" y="138.98050974512745"/>
         </scene>
-        <!--Item-->
+        <!--Movies-->
         <scene sceneID="sJt-qx-oJL">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wFl-MU-iox" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="FUi-VZ-WXu"/>
+                    <tabBarItem key="tabBarItem" title="Movies" image="Movies" selectedImage="Movies" id="FUi-VZ-WXu"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ee7-7T-5Nl">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Ee7-7T-5Nl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -117,13 +167,13 @@
             </objects>
             <point key="canvasLocation" x="2015" y="820"/>
         </scene>
-        <!--Item-->
+        <!--Favorites-->
         <scene sceneID="d9N-zA-IOS">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mGW-Go-vEh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="j3P-Yv-sAf"/>
+                    <tabBarItem key="tabBarItem" title="Favorites" image="Favorites" selectedImage="Favorites" id="j3P-Yv-sAf"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kTL-3a-YbK">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="kTL-3a-YbK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -137,4 +187,8 @@
             <point key="canvasLocation" x="1036" y="820"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Favorites" width="30" height="30"/>
+        <image name="Movies" width="30" height="30"/>
+    </resources>
 </document>

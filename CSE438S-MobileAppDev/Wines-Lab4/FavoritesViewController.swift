@@ -10,7 +10,7 @@ import UIKit
 
 class FavoritesViewController: UIViewController , UITableViewDataSource, UITableViewDelegate {
     
-
+    var favMovies: [String] = []
     var tableView: UITableView!
     var count = 0
     
@@ -23,24 +23,25 @@ class FavoritesViewController: UIViewController , UITableViewDataSource, UITable
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
-        let userDefaults = UserDefaults.standard
-        let favMovies = userDefaults.array(forKey: "Favorites") as? [String] ?? [String]()
-        count = favMovies.count;
-        print("isCalled")
     }
 
+    private func loadTable(){
+        let userDefaults = UserDefaults.standard
+        favMovies = userDefaults.array(forKey: "Favorites") as? [String] ?? [String]()
+        count = favMovies.count;
+        self.tableView.reloadData()
+
+        // have array and use count of array - use same data for num of
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
-        let userDefaults = UserDefaults.standard
-        let favMovies = userDefaults.array(forKey: "Favorites") as? [String] ?? [String]()
         cell.detailTextLabel?.text = favMovies[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("count: \(count)")
         return count
     }
     
@@ -55,41 +56,30 @@ class FavoritesViewController: UIViewController , UITableViewDataSource, UITable
     
      func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) { // err in deleting last element.
         if (editingStyle == UITableViewCellEditingStyle.delete) {
-            var lastRow = false;
-            if (count == 1) {
-                lastRow = true;
-            }
-            tableView.beginUpdates()
+            
             let userDefaults = UserDefaults.standard
             var favMovies = userDefaults.array(forKey: "Favorites") as? [String] ?? [String]()
             favMovies.remove(at: indexPath.row)
+
             count = favMovies.count
-            print("delete: \(count)")
-            if (lastRow) {
-                tableView.deleteSections([indexPath.section], with: .fade)
-            } else {
-                tableView.deleteRows(at: [indexPath], with: .fade)
-            }
-            self.tableView.reloadData()
-
-            tableView.endUpdates()
-
-
+            userDefaults.set(favMovies, forKey: "Favorites")
         }
+        loadTable()
+
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Favorites"
         setUpTableView()
-        print("viewDidLoad")
-
+        loadTable()
         // Do any additional setup after loading the view, typically from a nib.
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
         self.tableView.reloadData()
-
-
+        loadTable()
     }
     
     override func didReceiveMemoryWarning() {

@@ -12,27 +12,84 @@ class MovieDetails: UIViewController {
     
     var movImage:UIImage!
     var movName:String!
-    var movDescription:String!
-    //var favMovieImages: [UIImage] = []
+    var movIMDB:String!
+    var favMovs: [String] = []
+
     
     @IBOutlet var movieImage: UIImageView!
     @IBOutlet var movieLabel: UILabel!
-    @IBOutlet var movieDescription: UILabel!
+    @IBOutlet var movieDesc: UILabel!
+    @IBOutlet var movieRating: UILabel!
+    @IBOutlet var movieYear: UILabel!
+    @IBOutlet var favoritesButton: UIButton!
+    
     
     @IBAction func addToFavoritesPressed(_ sender: UIButton) {
         let userDefaults = UserDefaults.standard
+        favMovs = userDefaults.array(forKey: "Favorites") as? [String] ?? [String]()
+        favMovs.append(movName)
+        favoritesButton.setImage(UIImage(named: "star-fill"), for:.normal)
+        favoritesButton.isEnabled = false
+        userDefaults.set(favMovs, forKey: "Favorites")
         
-        var favoriteMovies = userDefaults.array(forKey: "Favorites") as? [String] ?? [String]()
-        favoriteMovies.append(movName)
-        userDefaults.set(favoriteMovies, forKey: "Favorites")
-        userDefaults.synchronize() // don't forget this!!!!
+        /* alert code from: http://www.learnswiftonline.com/reference-guides/uialertcontroller/ */
+        let alert = UIAlertController(title: "Favorited!", message: "You've favorited \(movName ?? "")", preferredStyle: .alert)
+        let OKPressed = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in
+        }
+        
+        alert.addAction(OKPressed)
+        self.present(alert, animated: true, completion: nil)
     }
+    func favorited() {
+        let userDefaults = UserDefaults.standard
+        favMovs = userDefaults.array(forKey: "Favorites") as? [String] ?? [String]()
+        if favMovs.contains(movName) {
+            print("Movie already favorited")
+            favoritesButton.setImage(UIImage(named: "star-fill"), for:.normal)
+            favoritesButton.isEnabled = false
+        }
+        else {
+            favoritesButton.setImage(UIImage(named: "star-empty"), for:.normal)
+            favoritesButton.isEnabled = true
+
+
+        }
+    }
+    
+    private func getJSON( url: String) -> JSON {
+        if let url = URL(string: url) {
+            if let data = try? Data(contentsOf: url) {
+                let json = JSON(data: data)
+                return json
+            }
+            else {
+                return JSON.null
+            }
+        }
+        else {
+            return JSON.null
+        }
+    }
+
+    private func fetchDataForDetailView() {
+        // test from class adapt to actual lab
+        
+        let json = getJSON(url: "http://www.omdbapi.com/?i=\(movIMDB ?? "")")
+        movieDesc.text = json["Plot"].stringValue
+        movieRating.text = "Rating: \(json["imdbRating"].stringValue)"
+        movieYear.text = "Released: \(json["Released"].stringValue)"
+
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchDataForDetailView()
+        favorited()
         movieImage.image = movImage
         movieLabel.text  = movName
-        movieDescription.text = movDescription
         self.title = movName
+
+        
         // Do any additional setup after loading the view.
     }
     
@@ -41,7 +98,11 @@ class MovieDetails: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
+    override func viewDidAppear(_ animated: Bool) {
+        favorited()
+
+    }
+
     /*
      // MARK: - Navigation
      
