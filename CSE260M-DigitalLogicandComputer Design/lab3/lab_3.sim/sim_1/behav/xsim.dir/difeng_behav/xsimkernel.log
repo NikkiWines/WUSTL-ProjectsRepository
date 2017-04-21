@@ -1,0 +1,4 @@
+Running: xsim.dir/difeng_behav/xsimk.exe -simmode gui -wdb difeng_behav.wdb -simrunnum 0 -socket 1586
+Design successfully loaded
+Design Loading Memory Usage: 8584 KB (Peak: 8584 KB)
+Design Loading CPU Usage: 0 ms

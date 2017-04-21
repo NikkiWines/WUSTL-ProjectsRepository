@@ -6,4 +6,7 @@ HW2: This assignment involves manipulating an image to change a target color int
 
 HW3: This assignment involves writing sequential and parallel code to solve the N-Queens problem using backtrack recursion.
 
-HW4: This assignment involves implementing map reduce in a friends-of-friends social situation (WIP). 
+HW4: This assignment involves implementing map reduce function for a friends-of-friends social situation. 
+
+HW5: This assignment involves using threads and frameworks to impelement sequential, divide-and-conquer, and parallel versions of nucleobase counting methods and quicksort. Additionally, I created async and finish constructs, first using threads, and then using frameworks.
+

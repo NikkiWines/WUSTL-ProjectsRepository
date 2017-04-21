@@ -1,0 +1,130 @@
+<project name="lab5" default="run" basedir=".">
+
+	<property 
+       name="toolpath" 
+       value="../../jars/"
+    />
+	
+	   <path id="src.path">
+	     <pathelement location="../../labs" />
+	     <pathelement location="../../studios" />
+	     <pathelement location="../../lecture" />
+	     <pathelement location="../../labsupport" />
+	     <pathelement location="../../coursesupport" />
+	   </path>
+	
+	   <path id="classes.path">
+	     <fileset dir="../../jars">
+	       <include name="java-cup-11a.jar"/>
+	       <include name="makesymstring.jar"/>
+	       <include name="parser.jar"/>
+	     </fileset>
+	   </path>
+
+	
+	<property name="jasmin.jar" value="${toolpath}/jasmin-2.3.jar" />
+
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+			<classpath>
+				<pathelement location="${toolpath}/ant-contrib-1.0b3.jar" />
+			</classpath>
+	</taskdef>
+
+
+
+
+
+	<target name="run" depends="clean">
+		<foreach inheritall="true" trim="true" param="jasmin.classname" target="InternalRun">
+			<path>
+				<fileset dir="../../TestFiles/lab5" />
+			</path>
+		</foreach>
+	</target>
+
+	<target name="runcontest" depends="clean">
+		<foreach inheritall="true" trim="true" param="jasmin.classname" target="InternalRun">
+			<path>
+				<fileset dir="../../TestFiles/lab5">
+					<include name="**/Contest.j"/>
+				</fileset>
+			</path>
+		</foreach>
+	</target>
+
+
+	<target name="rebuild">
+		<antcall target="rebuildeclipse"/>
+		<antcall target="rebuildnoeclipse"/>
+	</target>
+		
+	<target name="rebuildnoeclipse" if="noeclipse">
+		<mkdir dir="../../bin"/>
+      		<javac includeantruntime="false" destdir="../../bin" nowarn="true" failonerror="false" debug="true"  encoding="iso-8859-1">
+         		<classpath refid="classes.path"/>
+         		<src refid="src.path"/>
+         		<include name="lab5/**/*.java"/>
+      		</javac>
+	</target>
+	
+	<target name="rebuildeclipse" unless="noeclipse">
+		<eclipse.convertPath fileSystemPath="${basedir}/../.." property="topLevelProject"/>
+		<propertyregex property="noslash"
+				override="true"
+		              input="${topLevelProject}"
+		              regexp="[/](.*)"
+		              select="\1"
+		              casesensitive="false" />
+		<echo message="Rebuilding ${noslash}"/>
+		<eclipse.refreshLocal resource="${noslash}" depth="infinite"/>
+		<eclipse.incrementalBuild project="${noslash}" kind="full"/>		
+		<eclipse.refreshLocal resource="${noslash}" depth="infinite"/>
+	</target>
+	
+	<target name="clean">
+		<delete>
+			<fileset dir="." includes="**/*.class" />
+		</delete>
+	</target>
+
+
+	<target name="jasmin">
+		<fail message="Must supply source file" unless="jasmin.classname" />
+		<echo message="Assembling ${jasmin.classname}" />
+		<propertyregex property="nodotj"
+				override="true"
+		              input="${jasmin.classname}"
+		              regexp="(.*)(..)"
+		              select="\1"
+		              casesensitive="false" />
+		<propertyregex property="justclass"
+				override="true"
+		              input="${nodotj}"
+		              regexp="(.*[\\/])*(.*)"
+		              select="\2"
+		              casesensitive="false" />
+
+		<java jar="${jasmin.jar}" fork="true" failonerror="true">
+			<arg value="-d" />
+			<arg value="../../bin" />
+			<arg value="${nodotj}.j" />
+		</java>
+		<java jar="${toolpath}/filesize.jar" fork="true" failonerror="true">
+			<arg value="../../bin/${justclass}.class" />
+		</java>
+	</target>
+
+	<target name="InternalRun" depends="jasmin">
+		<fail message="Must supply classs name" unless="justclass" />
+		<echo message="Executing Java class ${justclass}" />
+		<java classname="${justclass}" logError="true" fork="true" failonerror="false" timeout="10000">
+			<!-- Uncomment below to turn of verification -->
+			<!--jvmarg value="-noverify"/-->
+			<classpath>
+				<pathelement path="../../bin" />
+			</classpath>
+		</java>
+	</target>
+
+
+</project>

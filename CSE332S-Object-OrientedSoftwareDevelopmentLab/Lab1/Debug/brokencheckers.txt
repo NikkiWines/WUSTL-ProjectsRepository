@@ -1,0 +1,37 @@
+8 8
+block chicker X 0 0
+blick checker X 9 2
+black checker X 1 1
+black checker X 2 9
+BLACK checker X 2 2
+black checker & 3 1
+black checker X v 0
+black checker X 4 2
+black checker X 5 1
+blAck checker X 6 0
+black checker X 6 2
+black checker X 9 9
+
+red checker O 0 6
+red checker O 1 5
+red checker O 1 7
+red checker O 2 6
+red checker O 3 5
+red checker O 3 7
+red checker O 4 6
+red checker O 5 5
+red checker O 5 7
+red checker O 6 6
+red checker O 7 5
+red checker O 7 7
+
+output: 
+Invalid Color: block 
+Invalid Color: blick
+ O O O O
+O O O O
+ O O O O
+
+ X X X
+X & X 
+     X

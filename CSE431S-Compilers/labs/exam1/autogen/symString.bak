@@ -1,0 +1,16 @@
+// Generated symbol to string mapping
+  package exam1.autogen;
+  public class symString {
+     public static String symToString[] = new String[9];
+     static {
+        symToString[8] = "link";
+        symToString[7] = "tag";
+        symToString[6] = "text";
+        symToString[5] = "ltag_c";
+        symToString[4] = "rtag";
+        symToString[3] = "ltag_o";
+        symToString[2] = "number";
+        symToString[1] = "error";
+        symToString[0] = "EOF";
+     }
+  }

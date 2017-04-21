@@ -1,0 +1,183 @@
+<project name="exam1" default="runYourParser" basedir=".">
+
+	<!--
+	   $Id: build.xml 26 2010-06-02 13:31:00Z cytron $
+	-->
+	<property 
+       name="toolpath" 
+       value="../../jars/"
+    />
+	
+	   <path id="src.path">
+	     <pathelement location="../../labs" />
+	     <pathelement location="../../studios" />
+	     <pathelement location="../../lecture" />
+	     <pathelement location="../../labsupport" />
+	     <pathelement location="../../coursesupport" />
+	   </path>
+	
+	   <path id="classes.path">
+	     <fileset dir="../../jars">
+	       <include name="java-cup-11a.jar"/>
+	       <include name="makesymstring.jar"/>
+	       <include name="parser.jar"/>
+	     </fileset>
+	   </path>
+
+	
+	<property name="cup.jar" value="${toolpath}/java-cup-11a.jar" />
+	
+	<property name="solutions.jar" value="${toolpath}/coursesolutions.jar"/>
+
+	<property name="jflex.jar" value="${toolpath}/JFlex.jar" />
+
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+			<classpath>
+				<pathelement location="${toolpath}/ant-contrib-1.0b3.jar" />
+			</classpath>
+	</taskdef>
+
+	<taskdef description="Translate a JFlex specification into Yylex.java" name="jflex" classname="JFlex.anttask.JFlexTask" classpath="${jflex.jar}" />
+
+	<taskdef description="Translate a CUP specification into a parser and symbol file" name="cup" classname="java_cup.anttask.CUPTask" classpath="${cup.jar}" />
+
+	<target name="build" depends="setup,genParser,genScanner,refreshScanner">
+		<antcall target="rebuild" />
+	</target>
+
+	<target name="clean">
+		<delete dir="autogen" />
+		<antcall target="rebuild" />
+	</target>
+
+	<target name="runYourParser" depends="build">
+		<antcall target="runparser">
+			<param name="target" value="runOneFileYourParser"/>
+			<param name="method" value="YourParser" />
+		</antcall>
+	</target>
+
+	<target name="runYourParserTrace" depends="build">
+		<antcall target="runparser">
+			<param name="target" value="runOneFileYourParser"/>
+			<param name="method" value="YourParserTrace" />
+		</antcall>
+	</target>
+
+	<target name="runparser" depends="build">
+		<fail message="Internal target" unless="method"/>
+		<fail message="Internal target" unless="target"/>
+		<foreach inheritall="true" delimiter="," trim="true" param="testfile" target="${target}">
+			<path>
+				<fileset dir="../../TestFiles/exam1" />
+			</path>
+		</foreach>
+	</target>
+
+	<target name="rebuild">
+		<antcall target="rebuildeclipse"/>
+		<antcall target="rebuildnoeclipse"/>
+	</target>
+	
+		
+	<target name="rebuildnoeclipse" if="noeclipse">
+		<mkdir dir="../../bin"/>
+      		<javac includeantruntime="false" destdir="../../bin" nowarn="true" failonerror="false" debug="true"  encoding="iso-8859-1">
+         		<classpath refid="classes.path"/>
+         		<src refid="src.path"/>
+         		<include name="exam1/**/*.java"/>
+      		</javac>
+	</target>
+	
+	<target name="rebuildeclipse" unless="noeclipse">
+		<eclipse.convertPath fileSystemPath="${basedir}/../.." property="topLevelProject"/>
+		<propertyregex property="noslash"
+				override="true"
+		              input="${topLevelProject}"
+		              regexp="[/](.*)"
+		              select="\1"
+		              casesensitive="false" />
+		<echo message="Rebuilding ${noslash}"/>
+		<eclipse.refreshLocal resource="${noslash}" depth="infinite"/>
+		<eclipse.incrementalBuild project="${noslash}" kind="full"/>		
+		<eclipse.refreshLocal resource="${noslash}" depth="infinite"/>
+	</target>
+	
+	<target name="setup">
+		<mkdir dir="autogen" />
+	</target>
+
+	<target name="genParser" depends="setup">
+		<cup srcfile="${basedir}/html.cup" destdir="${basedir}/.." parser="Parser" quiet="true" />
+		<java jar="${toolpath}/makesymstring.jar" input="autogen/sym.java" output="autogen/symString.java" fork="true" failonerror="true" />
+		<antcall target="rebuild" />
+	</target>
+
+	<target name="genScanner" depends="genParser,genScanner.depend" unless="genScanner.uptodate">
+		<jflex file="scanner.jflex" destdir="${basedir}/.." nobak="true" />
+		<copy file="autogen/symString.java" tofile="autogen/symString.bak" failonerror="false" />
+		<antcall target="rebuild" />
+	</target>
+
+	<target name="refreshScanner" depends="genScanner.depend" unless="scanner.fresh">
+		<echo message="Scanner Refresh"/>
+		<touch file="autogen/Yylex.java" />
+		<antcall target="rebuild"/>
+	</target>
+
+	<target name="genScanner.depend">
+		<condition property="genScanner.uptodate">
+			<uptodate srcfile="scanner.jflex" targetfile="autogen/Yylex.java" />
+		</condition>
+		<!--
+		   The following condition tests whether the contents of symString has
+		   changed, in which case we must force a recomile of Yylex.java by touching it.
+		   
+		   The reason for this is that the sym.java file contains final static constants that
+		   are not mentioned by name in Yylex.class, but are instead "optimized" by using
+		   their values directly.  The <javac> task has no idea that Yylex depends on sym.
+		   
+		   Why didn't we just test sym.java? It changes everytime CUP runs, thanks to
+		   a time-sensitive comment at the top.  The symString.java file does not have
+		   such a comment, but it changes in concert with sym.java.
+		   
+		   The symString.bak file is a record of symString.java the last time Yylex was
+		   compiled.  If symString.bak != symString.java, then we should recompile Yylex.java
+		   -->
+
+		<condition property="scanner.fresh">
+			<filesmatch file1="src/autogen/symString.java" file2="autogen/symString.bak" />
+		</condition>
+	</target>
+
+	<target name="runOneFileYourParser">
+		<fail message="Internal target" unless="target"/>
+		<fail message="Internal target" unless="testfile" />
+		<fail message="Internal target" unless="method" />
+		<echo message="Running ${method} on ${testfile}" />
+		<java classname="exam1.mains.${method}" logError="true" fork="true" failonerror="false">
+			<classpath>
+				<pathelement path="../../bin" />
+				<pathelement location="${cup.jar}" />
+			</classpath>
+			<arg value="${testfile}" />
+		</java>
+
+	</target>
+
+	<target name="runOneFileReferenceParser">
+		<fail message="Internal target" unless="target"/>
+		<fail message="Internal target" unless="testfile" />
+		<fail message="Internal target" unless="method" />
+		<echo message="Running ${method} on ${testfile}" />
+		<java classname="exam1.mains.${method}" logError="true" fork="true" failonerror="false">
+			<classpath>
+				<pathelement location="${toolpath}/parser.jar" />
+				<pathelement path="../../bin" />
+			</classpath>
+			<arg value="${testfile}" />
+		</java>
+
+	</target>
+
+</project>

@@ -1,0 +1,30 @@
+package exam1.autogen;
+import java_cup.runtime.*;
+import common.Listing;
+
+terminal String  ltag_o, rtag, ltag_c;
+terminal String	 text, tag, link;
+
+
+
+non terminal Program, Body;
+
+
+start with Program;
+
+Program
+	::=  ltag_o tag rtag Body
+	;
+
+Body // recursively calls on itself (contains combinations of what could be entered (ex. <tag>, normal text, a link. </tag>)
+	::= ltag_o tag rtag Body
+	| 	ltag_o tag rtag
+	|	text Body
+	|	text
+	|	tag Body
+	|	tag 
+	|   ltag_c tag rtag Body
+	|   ltag_c tag rtag // should be the only closing in an html file (should end on this)
+	|   link Body
+	|   link
+	;

@@ -1,0 +1,6 @@
+﻿  NineAlmonds.cpp
+\\warehouse2.seasad.wustl.edu\home\catherinewines\my documents\visual studio 2015\projects\lab2\lab2\ninealmonds.cpp(158): warning C4715: 'NineAlmondsGame::prompt': not all control paths return a value
+\\warehouse2.seasad.wustl.edu\home\catherinewines\my documents\visual studio 2015\projects\lab2\lab2\ninealmonds.cpp(349): warning C4715: 'NineAlmondsGame::play': not all control paths return a value
+\\warehouse2.seasad.wustl.edu\home\catherinewines\my documents\visual studio 2015\projects\lab2\lab2\ninealmonds.cpp(274): warning C4715: 'NineAlmondsGame::turn': not all control paths return a value
+  Lab2.vcxproj -> \\warehouse2.seasad.wustl.edu\home\catherinewines\my documents\visual studio 2015\Projects\Lab2\Debug\Lab2.exe
+  Lab2.vcxproj -> \\warehouse2.seasad.wustl.edu\home\catherinewines\my documents\visual studio 2015\Projects\Lab2\Debug\Lab2.pdb (Full PDB)
